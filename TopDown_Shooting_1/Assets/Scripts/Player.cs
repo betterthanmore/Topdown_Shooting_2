@@ -4,6 +4,7 @@ using UnityEngine;
 
 //RequireComponent  :  해당 컴포넌트를 자동으로 추가함
 [RequireComponent (typeof (PlayerController))]
+[RequireComponent (typeof (GunController))]
 
 public class Player : MonoBehaviour
 {
@@ -11,9 +12,11 @@ public class Player : MonoBehaviour
 
     Camera viewCamera;
     PlayerController controller;
+    GunController gunController;
     void Start()
     {
         controller = GetComponent<PlayerController>();
+        gunController = GetComponent<GunController>();
         viewCamera = Camera.main;
     }
 
@@ -35,6 +38,12 @@ public class Player : MonoBehaviour
             Vector3 point = ray.GetPoint(rayDistance);
             Debug.DrawLine(ray.origin, point, Color.red);
             controller.LookAt(point);
+        }
+
+        //발사 입력 : 마우스 좌측 버튼 입력 받기
+        if (Input.GetMouseButton(0))
+        {
+            gunController.Shoot();
         }
     }
 }
